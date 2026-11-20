@@ -8,14 +8,37 @@ Theme & Mathematical Metaphor:
   - 'U' (Upshift Operator): Pre-multiplied shift matrix ($U \times A$) shifting rows upward.
   - 'L' (Leftshift Operator): Post-multiplied shift matrix ($A \times L$) shifting columns to the left.
   - 'R' (Rightshift Operator): Post-multiplied shift matrix ($A \times R$) shifting columns to the right.
-- Matrix Multiplication Mechanics:
-  - Clear visual breakdown of $A \times B$ where $B$ (or operator matrix) governs the transformation/operation.
-  - Row-by-column dot product visual highlighting (rows of first matrix sweeping across columns of second matrix).
-  - Showing how transformation matrices act on state matrices to produce new outputs.
-- Elementary Operations:
-  - Downshifting & gravity.
-  - Line clears / row elimination ($R_k \to 0$) and row combination.
-  - Column shifts (horizontal piece movement).
+
+Detailed Scene Breakdown:
+
+Scene 1: Introduction to Tetris as Matrix A
+- Introduce Tetris playing field as grid / matrix $A$.
+- Visual bridge: blocks map to non-zero values / 1s, empty space to 0s.
+
+Scene 2: Matrix Multiplication Mechanics (Row vs. Column Perspectives)
+- General Matrix Multiplication $A \times B$:
+  1. Row Perspective (Pre-multiplication / Row Combinations):
+     - Multiplying from the left: $B \times A$.
+     - Each row of the result is a linear combination of rows of $A$, weighted by entries in $B$.
+     - Concrete Intro of 'D' (Downshift Matrix): Show how a sub-diagonal matrix $D$ acts on rows of $A$ to shift each row down ($R_i \to R_{i+1}$).
+  2. Column Perspective (Post-multiplication / Column Combinations):
+     - Multiplying from the right: $A \times B$.
+     - Each column of the result is a linear combination of columns of $A$, weighted by entries in $B$.
+     - Concrete Intro of 'R' (Rightshift Matrix): Show how super-diagonal matrix $R$ acts on columns of $A$ to shift each column right ($C_j \to C_{j+1}$).
+  3. Introduce $U$ and $L$ as reciprocal vertical and horizontal shift operators.
+
+Scene 3: Side-by-Side Dynamic Comparison (Tetris Board vs. Matrix Algebra)
+- Split Screen layout (16:9):
+  - Left Side: Graphical Tetris board with colorful falling tetromino (e.g., T-piece or L-piece).
+  - Right Side: Live matrix equation updating dynamically.
+- Action 1 - Gravity:
+  - Piece falls one step $\leftrightarrow$ Compute $D \times A$, showing output matrix and block moving down.
+- Action 2 - Lateral Move (Right):
+  - Player taps right $\leftrightarrow$ Compute $A \times R$, showing block shifted to next column.
+- Action 3 - Lateral Move (Left):
+  - Player taps left $\leftrightarrow$ Compute $A \times L$.
+- Action 4 - Line Clear & Row Elimination:
+  - Row fills up $\to$ Row clear elimination $R_k \to 0$, then upper rows downshifted via $D$.
 
 Instructions - You will setup manim and generate animations after confirming the final output and export it.
 
