@@ -68,24 +68,24 @@ class Scene1TetrisMatrixIntro(Scene):
         # Background subtle styling
         self.camera.background_color = "#0e1117"
         
-        # 1. Main Title Sequence
+        # 1. Main Title Sequence (~5.5s)
         title = Text("Linear Algebra of Tetris", font_size=44, color=YELLOW, weight=BOLD)
         subtitle = Text("Representing the Game Board as Matrix A", font_size=26, color=LIGHT_GREY)
         title_group = VGroup(title, subtitle).arrange(DOWN, buff=0.25).to_edge(UP, buff=0.5)
         
-        self.play(Write(title), run_time=1.0)
-        self.play(FadeIn(subtitle, shift=UP*0.2), run_time=0.8)
-        self.wait(1.0)
+        self.play(Write(title), run_time=1.8)
+        self.play(FadeIn(subtitle, shift=UP*0.2), run_time=1.2)
+        self.wait(2.5)
         
-        # Shrink and reposition title to top corner/edge
+        # Shrink and reposition title to top banner (~2.5s)
         mini_title = Text("Part 1: The Tetris State Matrix", font_size=28, color=YELLOW, weight=BOLD).to_edge(UP, buff=0.4)
         self.play(
             ReplacementTransform(title_group, mini_title),
-            run_time=0.8
+            run_time=1.2
         )
+        self.wait(1.2)
         
         # 2. Setup Tetris Grid and Matrix Data
-        # 6 rows x 5 columns grid for optimal visibility in 16:9
         rows, cols = 6, 5
         cell_size = 0.72
         
@@ -104,7 +104,7 @@ class Scene1TetrisMatrixIntro(Scene):
         EMPTY_COLOR = "#222738"
         GRID_LINE_COLOR = "#3d4868"
         
-        # Left Side: Tetris Board
+        # Left Side: Tetris Board (~5.0s)
         board_group = VGroup()
         board_cells = {}
         
@@ -163,24 +163,23 @@ class Scene1TetrisMatrixIntro(Scene):
         self.play(
             FadeIn(grid_bg),
             FadeIn(board_label),
-            run_time=0.8
+            run_time=1.0
         )
         self.play(
             LaggedStart(
-                *[FadeIn(board_cells[(r, c)], scale=0.8) for r in range(rows) for c in range(cols)],
-                lag_ratio=0.02
+                *[FadeIn(board_cells[(r, c)], scale=0.85) for r in range(rows) for c in range(cols)],
+                lag_ratio=0.03
             ),
-            run_time=1.2
+            run_time=1.8
         )
-        self.wait(0.6)
+        self.wait(2.0)
         
-        # 3. Equivalence Arrow in Middle
-        arrow = Text("⟷", font_size=48, color=YELLOW).move_to([0, board_origin_y, 0])
-        equiv_text = Text("Isomorphic", font_size=16, color=LIGHT_GREY).next_to(arrow, UP, buff=0.15)
+        # 3. Equivalence Arrow in Middle (Clean arrow, NO "isomorphic" text) (~3.0s)
+        arrow = Text("⟷", font_size=52, color=YELLOW).move_to([0, board_origin_y, 0])
+        self.play(FadeIn(arrow, scale=0.8), run_time=1.0)
+        self.wait(1.5)
         
-        self.play(FadeIn(arrow), FadeIn(equiv_text), run_time=0.6)
-        
-        # 4. Right Side: Matrix A
+        # 4. Right Side: Matrix A (~6.0s)
         matrix_origin_x = 3.6
         matrix_origin_y = board_origin_y
         
@@ -199,19 +198,18 @@ class Scene1TetrisMatrixIntro(Scene):
             FadeIn(matrix_label),
             Create(mat_mob[0]),  # Left bracket
             Create(mat_mob[1]),  # Right bracket
-            run_time=0.8
+            run_time=1.2
         )
         self.play(
             LaggedStart(
-                *[FadeIn(entry, scale=1.3) for entry in mat_mob.entries],
-                lag_ratio=0.02
+                *[FadeIn(entry, scale=1.2) for entry in mat_mob.entries],
+                lag_ratio=0.03
             ),
-            run_time=1.2
+            run_time=2.0
         )
-        self.wait(1.0)
+        self.wait(2.5)
         
-        # 5. Explaining Cell Mapping (0 = Empty, 1/2 = Filled Block)
-        # Highlight falling T-piece on both sides
+        # 5. Explaining Falling Tetromino (1s) (~6.5s)
         t_piece_indices = [(1, 1), (1, 2), (1, 3), (2, 2)]
         
         highlights_board = VGroup(*[
@@ -224,18 +222,18 @@ class Scene1TetrisMatrixIntro(Scene):
             for (r, c) in t_piece_indices
         ])
         
-        legend_t = Text("Falling Tetromino  ➜  Non-Zero Submatrix (1s)", font_size=20, color="#ff79c6")
+        legend_t = Text("Falling Tetromino  ➜  Non-Zero Submatrix (1s)", font_size=21, color="#ff79c6")
         legend_t.to_edge(DOWN, buff=0.6)
         
         self.play(
             Create(highlights_board),
             Create(highlights_mat),
             FadeIn(legend_t, shift=UP*0.2),
-            run_time=1.0
+            run_time=1.5
         )
-        self.wait(1.5)
+        self.wait(5.0)
         
-        # Next: Highlight Empty Space (0s)
+        # 6. Explaining Empty Space (0s) (~6.5s)
         empty_indices = [(0, 0), (0, 1), (0, 2), (0, 3), (0, 4)]
         highlights_empty_board = VGroup(*[
             SurroundingRectangle(board_cells[idx], color="#6272a4", buff=0.03, stroke_width=2.5)
@@ -246,39 +244,38 @@ class Scene1TetrisMatrixIntro(Scene):
             for (r, c) in empty_indices
         ])
         
-        legend_zero = Text("Empty Space  ➜  Zero Entries (0s)", font_size=20, color="#8be9fd")
+        legend_zero = Text("Empty Space  ➜  Zero Entries (0s)", font_size=21, color="#8be9fd")
         legend_zero.to_edge(DOWN, buff=0.6)
         
         self.play(
             ReplacementTransform(highlights_board, highlights_empty_board),
             ReplacementTransform(highlights_mat, highlights_empty_mat),
             ReplacementTransform(legend_t, legend_zero),
-            run_time=1.0
+            run_time=1.5
         )
-        self.wait(1.5)
+        self.wait(5.0)
         
-        # Fade highlights out, summary conclusion
-        summary = Text("Every game movement is an Algebraic Matrix Operation!", font_size=22, color=YELLOW, weight=BOLD)
+        # 7. Core Takeaway / Transition (~6.0s)
+        summary = Text("Every game movement is an Algebraic Matrix Operation!", font_size=23, color=YELLOW, weight=BOLD)
         summary.to_edge(DOWN, buff=0.6)
         
         self.play(
             FadeOut(highlights_empty_board),
             FadeOut(highlights_empty_mat),
             ReplacementTransform(legend_zero, summary),
-            run_time=0.8
+            run_time=1.2
         )
-        self.wait(2.0)
+        self.wait(4.5)
         
-        # Outro transition
+        # Outro transition (~2.0s)
         self.play(
             FadeOut(board_group),
             FadeOut(board_label),
             FadeOut(arrow),
-            FadeOut(equiv_text),
             FadeOut(mat_mob),
             FadeOut(matrix_label),
             FadeOut(summary),
             FadeOut(mini_title),
-            run_time=1.0
+            run_time=1.5
         )
         self.wait(0.5)
