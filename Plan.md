@@ -49,6 +49,9 @@ Environment & Status:
 - System tools: `ffmpeg`, `cairo`, `pango`, `pkgconf` configured.
 - Python Manim: **Manim Community v0.22.1** installed and verified.
 - Rendering Engine: Manim native Pango vector rendering (`Text`, `VGroup`, custom pixel-perfect matrix brackets and grid blocks) — fast, zero external TeX bottleneck, completely self-contained.
+- Video Export Directory: `raw/` for rendered video outputs.
+- Source Directory: `src/` modular scene code.
+- Scene 1 (`src/scene1_intro.py`): Implementation ready, rendering to `raw/Scene1TetrisMatrixIntro.mp4`.
 - Git: Repository initialized, `.gitignore` configured to keep repo clean of video/media cache artifacts.
 
 
@@ -57,4 +60,7 @@ Environment & Status:
 - System tools: `ffmpeg`, `cairo`, `pango`, `pkgconf` configured.
 - Python Manim: **Manim Community v0.22.1** installed and verified.
 - Rendering Engine: Manim native Pango vector rendering (`Text`, `VGroup`, custom pixel-perfect matrix brackets and grid blocks) — fast, zero external TeX bottleneck, completely self-contained.
+- Video Export Directory: `raw/` for rendered video outputs.
+- Source Directory: `src/` modular scene code.
+- Scene 1 (`src/scene1_intro.py`): Implementation ready, rendering to `raw/Scene1TetrisMatrixIntro.mp4`.
 - Git: Repository initialized, `.gitignore` configured to keep repo clean of video/media cache artifacts.
