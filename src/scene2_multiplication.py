@@ -1,6 +1,6 @@
 from manim import *
 
-def create_matrix_mobject(data, cell_size=0.62, font_size=24, color_map=None, bracket_color=WHITE, custom_pos=None):
+def create_matrix_mobject(data, cell_size=0.62, font_size=24, color_map=None, bracket_color=WHITE):
     """
     Creates a standalone matrix Mobject with custom vector brackets and styled entries without LaTeX.
     """
@@ -72,7 +72,7 @@ class Scene2MultiplicationMechanics(Scene):
         
         self.play(Write(sec_title), run_time=1.5)
         self.play(FadeIn(sec_sub, shift=UP*0.2), run_time=1.0)
-        self.wait(2.5)
+        self.wait(2.2)
         
         # Shrink to top banner
         mini_banner = Text("Part 2: Multiplication Perspectives (B × A  vs.  A × B)", font_size=26, color=YELLOW, weight=BOLD).to_edge(UP, buff=0.4)
@@ -89,26 +89,22 @@ class Scene2MultiplicationMechanics(Scene):
         self.wait(1.8)
         
         # Define 3x3 Downshift matrix D and State matrix A
-        # D is subdiagonal of 1s
         d_data = [
             [0, 0, 0],
             [1, 0, 0],
             [0, 1, 0]
         ]
-        # State A (e.g. block in top row)
         a_data = [
             [1, 1, 1],
             [0, 1, 0],
             [0, 0, 0]
         ]
-        # Result D x A (shifted down by 1 row)
         res_da_data = [
             [0, 0, 0],
             [1, 1, 1],
             [0, 1, 0]
         ]
         
-        # Build matrices
         c_map_op = {1: "#50fa7b", 0: "#6272a4"}
         c_map_a = {1: "#ff79c6", 0: "#6272a4"}
         
@@ -119,9 +115,9 @@ class Scene2MultiplicationMechanics(Scene):
         times_sym = Text("×", font_size=32, color=WHITE)
         equals_sym = Text("=", font_size=32, color=WHITE)
         
-        label_D = Text("Downshift D", font_size=18, color="#50fa7b").next_to(mat_D, UP, buff=0.2)
-        label_A = Text("State A", font_size=18, color="#ff79c6").next_to(mat_A, UP, buff=0.2)
-        label_Out = Text("Output (D × A)", font_size=18, color=YELLOW).next_to(mat_Out, UP, buff=0.2)
+        label_D = Text("Downshift D", font_size=18, color="#50fa7b")
+        label_A = Text("State A", font_size=18, color="#ff79c6")
+        label_Out = Text("Output (D × A)", font_size=18, color=YELLOW)
         
         eq_group = VGroup(mat_D, times_sym, mat_A, equals_sym, mat_Out).arrange(RIGHT, buff=0.45).move_to([0, -0.6, 0])
         label_D.next_to(mat_D, UP, buff=0.2)
@@ -138,12 +134,10 @@ class Scene2MultiplicationMechanics(Scene):
         )
         self.wait(1.5)
         
-        # Step through rows of D pulling rows of A
-        explanation_box = Text("Row 1: [0, 0, 0]  ➜  New Row 1 = [0, 0, 0] (Cleared)", font_size=19, color=LIGHT_GREY).to_edge(DOWN, buff=0.8)
-        
         # Row 1 action
         rect_d1 = SurroundingRectangle(mat_D.row_groups[0], color="#50fa7b", buff=0.08)
         rect_out1 = SurroundingRectangle(mat_Out.row_groups[0], color=YELLOW, buff=0.08)
+        explanation_box = Text("Row 1: [0, 0, 0]  ➜  New Row 1 = [0, 0, 0] (Cleared)", font_size=19, color=LIGHT_GREY).to_edge(DOWN, buff=0.8)
         
         self.play(
             Create(rect_d1),
@@ -158,7 +152,6 @@ class Scene2MultiplicationMechanics(Scene):
         rect_d2 = SurroundingRectangle(mat_D.row_groups[1], color="#50fa7b", buff=0.08)
         rect_a1 = SurroundingRectangle(mat_A.row_groups[0], color="#ff79c6", buff=0.08)
         rect_out2 = SurroundingRectangle(mat_Out.row_groups[1], color=YELLOW, buff=0.08)
-        
         exp2 = Text("Row 2: [1, 0, 0]  ➜  Selects 1 × Row 1 of A  ➜  Shifted Down!", font_size=19, color="#50fa7b").to_edge(DOWN, buff=0.8)
         
         self.play(
@@ -175,7 +168,6 @@ class Scene2MultiplicationMechanics(Scene):
         rect_d3 = SurroundingRectangle(mat_D.row_groups[2], color="#50fa7b", buff=0.08)
         rect_a2 = SurroundingRectangle(mat_A.row_groups[1], color="#ff79c6", buff=0.08)
         rect_out3 = SurroundingRectangle(mat_Out.row_groups[2], color=YELLOW, buff=0.08)
-        
         exp3 = Text("Row 3: [0, 1, 0]  ➜  Selects 1 × Row 2 of A  ➜  Shifted Down!", font_size=19, color="#50fa7b").to_edge(DOWN, buff=0.8)
         
         self.play(
@@ -208,20 +200,16 @@ class Scene2MultiplicationMechanics(Scene):
         self.play(FadeIn(col_headline), FadeIn(col_subtext), run_time=1.2)
         self.wait(1.8)
         
-        # Define 3x3 Rightshift matrix R
-        # R is superdiagonal of 1s
         r_data = [
             [0, 1, 0],
             [0, 0, 1],
             [0, 0, 0]
         ]
-        # State A (block on left)
         a2_data = [
             [1, 0, 0],
             [1, 1, 0],
             [1, 0, 0]
         ]
-        # Result A x R (shifted right by 1 column)
         res_ar_data = [
             [0, 1, 0],
             [0, 1, 1],
@@ -252,7 +240,6 @@ class Scene2MultiplicationMechanics(Scene):
         )
         self.wait(1.5)
         
-        # Step through columns of R
         # Col 1 action
         rect_r_c1 = SurroundingRectangle(mat_R.col_groups[0], color="#00d2d3", buff=0.08)
         rect_out_c1 = SurroundingRectangle(mat_Out2.col_groups[0], color=YELLOW, buff=0.08)
@@ -311,60 +298,92 @@ class Scene2MultiplicationMechanics(Scene):
         self.wait(1.0)
         
         # -------------------------------------------------------------
-        # 4. Summary of the 4 Standard Operators: U, D, L, R (~8s)
+        # 4. Standard Shift Operators for 6x5 Board (~18s)
         # -------------------------------------------------------------
-        sum_title = Text("The 4 Standard Shift Operators", font_size=26, color=YELLOW, weight=BOLD).next_to(mini_banner, DOWN, buff=0.35)
+        sum_title = Text("The 4 Standard Shift Operators (for 6 × 5 Game Board A)", font_size=24, color=YELLOW, weight=BOLD).next_to(mini_banner, DOWN, buff=0.3)
         
-        box_u = VGroup(
-            Text("U (Upshift)", font_size=18, color="#50fa7b", weight=BOLD),
-            Text("Pre-multiply: U × A", font_size=15, color=WHITE),
-            Text("Moves rows UP", font_size=14, color=LIGHT_GREY)
+        # Construct actual 6x6 U and D, and 5x5 L and R matrices
+        # U_6x6: superdiagonal of 1s
+        u_6x6 = [[1 if c == r + 1 else 0 for c in range(6)] for r in range(6)]
+        # D_6x6: subdiagonal of 1s
+        d_6x6 = [[1 if c == r - 1 else 0 for c in range(6)] for r in range(6)]
+        # L_5x5: subdiagonal of 1s
+        l_5x5 = [[1 if c == r - 1 else 0 for c in range(5)] for r in range(5)]
+        # R_5x5: superdiagonal of 1s
+        r_5x5 = [[1 if c == r + 1 else 0 for c in range(5)] for r in range(5)]
+        
+        c_green = "#50fa7b"
+        c_cyan = "#00d2d3"
+        c_dim = "#44475a"
+        
+        mat_disp_U = create_matrix_mobject(u_6x6, cell_size=0.25, font_size=12, color_map={1: c_green, 0: c_dim}, bracket_color=c_green)
+        mat_disp_D = create_matrix_mobject(d_6x6, cell_size=0.25, font_size=12, color_map={1: c_green, 0: c_dim}, bracket_color=c_green)
+        mat_disp_L = create_matrix_mobject(l_5x5, cell_size=0.25, font_size=12, color_map={1: c_cyan, 0: c_dim}, bracket_color=c_cyan)
+        mat_disp_R = create_matrix_mobject(r_5x5, cell_size=0.25, font_size=12, color_map={1: c_cyan, 0: c_dim}, bracket_color=c_cyan)
+        
+        card_u_content = VGroup(
+            Text("U (Upshift 6×6)", font_size=15, color=c_green, weight=BOLD),
+            mat_disp_U,
+            Text("U × A (Pre-multiply)", font_size=13, color=WHITE),
+            Text("Pulls rows UP", font_size=12, color=LIGHT_GREY)
         ).arrange(DOWN, buff=0.12)
         
-        box_d = VGroup(
-            Text("D (Downshift)", font_size=18, color="#50fa7b", weight=BOLD),
-            Text("Pre-multiply: D × A", font_size=15, color=WHITE),
-            Text("Moves rows DOWN (Gravity)", font_size=14, color=LIGHT_GREY)
+        card_d_content = VGroup(
+            Text("D (Downshift 6×6)", font_size=15, color=c_green, weight=BOLD),
+            mat_disp_D,
+            Text("D × A (Pre-multiply)", font_size=13, color=WHITE),
+            Text("Pulls rows DOWN (Gravity)", font_size=12, color=LIGHT_GREY)
         ).arrange(DOWN, buff=0.12)
         
-        box_l = VGroup(
-            Text("L (Leftshift)", font_size=18, color="#00d2d3", weight=BOLD),
-            Text("Post-multiply: A × L", font_size=15, color=WHITE),
-            Text("Moves cols LEFT", font_size=14, color=LIGHT_GREY)
+        card_l_content = VGroup(
+            Text("L (Leftshift 5×5)", font_size=15, color=c_cyan, weight=BOLD),
+            mat_disp_L,
+            Text("A × L (Post-multiply)", font_size=13, color=WHITE),
+            Text("Shifts cols LEFT", font_size=12, color=LIGHT_GREY)
         ).arrange(DOWN, buff=0.12)
         
-        box_r = VGroup(
-            Text("R (Rightshift)", font_size=18, color="#00d2d3", weight=BOLD),
-            Text("Post-multiply: A × R", font_size=15, color=WHITE),
-            Text("Moves cols RIGHT", font_size=14, color=LIGHT_GREY)
+        card_r_content = VGroup(
+            Text("R (Rightshift 5×5)", font_size=15, color=c_cyan, weight=BOLD),
+            mat_disp_R,
+            Text("A × R (Post-multiply)", font_size=13, color=WHITE),
+            Text("Shifts cols RIGHT", font_size=12, color=LIGHT_GREY)
         ).arrange(DOWN, buff=0.12)
         
-        panels = VGroup(box_u, box_d, box_l, box_r).arrange(RIGHT, buff=0.55).move_to([0, -0.6, 0])
+        cards_group = VGroup(card_u_content, card_d_content, card_l_content, card_r_content).arrange(RIGHT, buff=0.45).move_to([0, -0.65, 0])
         
-        # Add nice border cards around each
-        cards = VGroup(*[
-            SurroundingRectangle(p, buff=0.22, color="#3d4868", fill_color="#131722", fill_opacity=0.85, stroke_width=1.5)
-            for p in panels
+        card_boxes = VGroup(*[
+            SurroundingRectangle(c, buff=0.18, color="#3d4868", fill_color="#131722", fill_opacity=0.92, stroke_width=1.5)
+            for c in cards_group
         ])
         
         self.play(FadeIn(sum_title), run_time=1.0)
         self.play(
             LaggedStart(
-                *[AnimationGroup(Create(cards[i]), FadeIn(panels[i])) for i in range(4)],
+                *[AnimationGroup(Create(card_boxes[i]), FadeIn(cards_group[i])) for i in range(4)],
                 lag_ratio=0.18
             ),
             run_time=2.5
         )
-        self.wait(5.0)
-        
-        bridge_next = Text("Next: Connecting Shift Matrices live to the Tetris Board...", font_size=21, color=YELLOW).to_edge(DOWN, buff=0.6)
-        self.play(FadeIn(bridge_next, shift=UP*0.2), run_time=1.0)
         self.wait(3.5)
         
-        # Outro fadeout
+        # Clear statement of intent for Scene 3
+        intent_title = Text("Strategic Roadmap for Scene 3:", font_size=18, color=YELLOW, weight=BOLD)
+        intent_desc = Text("We will apply D and R live to the 6 × 5 Tetris matrix to animate falling gravity and user control!", font_size=17, color=WHITE)
+        intent_group = VGroup(intent_title, intent_desc).arrange(DOWN, buff=0.1).to_edge(DOWN, buff=0.35)
+        
+        intent_bg = SurroundingRectangle(intent_group, color=YELLOW, fill_color="#1c1f2e", fill_opacity=0.95, stroke_width=1.5, buff=0.15)
+        
         self.play(
-            FadeOut(sum_title), FadeOut(panels), FadeOut(cards),
-            FadeOut(bridge_next), FadeOut(mini_banner),
+            Create(intent_bg),
+            FadeIn(intent_group),
+            run_time=1.2
+        )
+        self.wait(5.5)
+        
+        # Outro transition
+        self.play(
+            FadeOut(sum_title), FadeOut(cards_group), FadeOut(card_boxes),
+            FadeOut(intent_bg), FadeOut(intent_group), FadeOut(mini_banner),
             run_time=1.5
         )
         self.wait(0.5)
