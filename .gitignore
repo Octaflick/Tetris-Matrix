@@ -4,3 +4,4 @@ __pycache__/
 media/
 *.mp4
 *.png
+.DS_Store
